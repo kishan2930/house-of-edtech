@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
+import { getServerEnv } from '@/lib/env';
+
 /**
  * Auth.js configuration (scaffold only — no real login UI yet).
  *
@@ -8,6 +10,7 @@ import Credentials from 'next-auth/providers/credentials';
  * In production you'd verify against your database instead.
  */
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: getServerEnv().AUTH_SECRET,
   providers: [
     Credentials({
       name: 'Credentials',

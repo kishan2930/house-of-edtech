@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { getServerEnv } from '@/lib/env';
+
 /**
  * Database connection singleton.
  *
@@ -8,13 +10,7 @@ import mongoose from 'mongoose';
  * Stored in .env.local so secrets never get committed to git.
  */
 function getMongoUri(): string {
-  const uri = process.env.MONGODB_URI;
-  if (!uri) {
-    throw new Error(
-      'Missing MONGODB_URI. Copy .env.example to .env.local and add your Atlas connection string.',
-    );
-  }
-  return uri;
+  return getServerEnv().MONGODB_URI;
 }
 
 /**

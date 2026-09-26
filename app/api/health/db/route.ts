@@ -17,13 +17,12 @@ export async function GET() {
       count,
     });
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : 'Unknown database error';
+    console.error('Database health check failed:', error);
 
     return NextResponse.json(
       {
         connected: false,
-        error: message,
+        error: 'Database connection failed.',
       },
       { status: 500 },
     );

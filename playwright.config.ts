@@ -21,5 +21,14 @@ export default defineConfig({
     command: 'npm run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
+    env: {
+      AUTH_SECRET:
+        process.env.AUTH_SECRET ??
+        'playwright-test-secret-at-least-32-characters',
+      AUTH_URL: process.env.AUTH_URL ?? 'http://localhost:3000',
+      MONGODB_URI:
+        process.env.MONGODB_URI ??
+        'mongodb://127.0.0.1:27017/house-of-edtech-test',
+    },
   },
 });

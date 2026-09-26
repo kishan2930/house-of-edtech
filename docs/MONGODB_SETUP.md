@@ -37,10 +37,12 @@ Go to [mongodb.com/atlas](https://www.mongodb.com/atlas) and sign up (free tier)
 cp .env.example .env.local
 ```
 
-Edit `.env.local`:
+Edit `.env.local` (all values from `.env.example` are required):
 
 ```env
 MONGODB_URI="mongodb+srv://youruser:yourpassword@cluster0.xxxxx.mongodb.net/house-of-edtech?retryWrites=true&w=majority"
+AUTH_SECRET="your-generated-secret-at-least-32-characters"
+AUTH_URL="http://localhost:3000"
 ```
 
 ## 7. Verify the connection

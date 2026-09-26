@@ -1,6 +1,6 @@
 # House of Edtech — Full-Stack Assignment Boilerplate
 
-Next.js 16 full-stack boilerplate for the House of Edtech assignment. Includes TypeScript, Tailwind CSS, MongoDB (Mongoose), shadcn/ui, testing, and CI/CD.
+Next.js 16 full-stack boilerplate for the House of Edtech assignment. Includes TypeScript, Tailwind CSS, MongoDB (Mongoose), Auth.js scaffold, shadcn/ui, testing, and CI/CD.
 
 ## Tech Stack
 
@@ -8,6 +8,7 @@ Next.js 16 full-stack boilerplate for the House of Edtech assignment. Includes T
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS + shadcn/ui
 - **Database:** MongoDB Atlas + Mongoose
+- **Auth:** Auth.js v5 (NextAuth) — scaffold only, no login UI yet
 - **Testing:** Vitest (unit) + Playwright (e2e)
 - **CI/CD:** GitHub Actions + Vercel
 
@@ -25,7 +26,15 @@ npm install
 cp .env.example .env.local
 ```
 
-Fill in your MongoDB Atlas connection string. See [docs/MONGODB_SETUP.md](docs/MONGODB_SETUP.md) for a step-by-step guide.
+Fill in all values in `.env.local`. Server env vars are validated at runtime via Zod in `lib/env.ts`.
+
+| Variable      | Required | Description                                                         |
+| ------------- | -------- | ------------------------------------------------------------------- |
+| `MONGODB_URI` | Yes      | MongoDB Atlas connection string                                     |
+| `AUTH_SECRET` | Yes      | Session encryption secret (min 32 chars; `openssl rand -base64 32`) |
+| `AUTH_URL`    | Yes      | App URL (`http://localhost:3000` locally)                           |
+
+See [docs/MONGODB_SETUP.md](docs/MONGODB_SETUP.md) for Atlas setup steps.
 
 ### 3. Run the dev server
 
@@ -45,16 +54,17 @@ Expected: `{ "connected": true, "count": 0 }`
 
 ## Scripts
 
-| Command             | Description              |
-| ------------------- | ------------------------ |
-| `npm run dev`       | Start development server |
-| `npm run build`     | Production build         |
-| `npm run lint`      | Run ESLint               |
-| `npm run typecheck` | Run TypeScript check     |
-| `npm run format`    | Format with Prettier     |
-| `npm run test:unit` | Run Vitest unit tests    |
-| `npm run test:e2e`  | Run Playwright e2e tests |
-| `npm run test`      | Run all tests            |
+| Command                | Description               |
+| ---------------------- | ------------------------- |
+| `npm run dev`          | Start development server  |
+| `npm run build`        | Production build          |
+| `npm run lint`         | Run ESLint                |
+| `npm run format`       | Format with Prettier      |
+| `npm run format:check` | Check Prettier formatting |
+| `npm run typecheck`    | Run TypeScript check      |
+| `npm run test:unit`    | Run Vitest unit tests     |
+| `npm run test:e2e`     | Run Playwright e2e tests  |
+| `npm run test`         | Run all tests             |
 
 ## Project Structure
 
@@ -65,22 +75,20 @@ app/
 components/
   ui/               # shadcn/ui components
   layout/           # Header, footer
+hooks/              # Custom React hooks (shadcn alias)
 lib/
   db.ts             # MongoDB connection singleton
-  validators/       # Zod schemas
+  env.ts            # Zod server env validation
+  validators/       # Zod schemas for future features
 models/             # Mongoose models
 tests/
   unit/             # Vitest tests
   e2e/              # Playwright tests
 ```
 
-## Environment Variables
+## Footer (assignment requirement)
 
-| Variable          | Required | Description                                       |
-| ----------------- | -------- | ------------------------------------------------- |
-| `MONGODB_URI`     | Yes      | MongoDB Atlas connection string                   |
-| `NEXTAUTH_SECRET` | Phase 7  | Random secret for session encryption              |
-| `NEXTAUTH_URL`    | Phase 7  | Deployed URL (e.g. `https://your-app.vercel.app`) |
+Before submission, update `components/layout/footer.tsx` with your name, GitHub profile URL, and LinkedIn profile URL.
 
 ## Deployment (Vercel)
 
@@ -89,16 +97,21 @@ tests/
 3. Click **Add New Project** → import this repository.
 4. Vercel auto-detects Next.js — no extra config needed.
 5. Add environment variables in **Settings → Environment Variables**:
-   - `MONGODB_URI` — your Atlas connection string (use `0.0.0.0/0` in Atlas Network Access for Vercel)
+   - `MONGODB_URI` — your Atlas connection string
+   - `AUTH_SECRET` — production secret (`openssl rand -base64 32`)
+   - `AUTH_URL` — your deployed URL (e.g. `https://your-app.vercel.app`)
 6. Click **Deploy**. Future merges to `main` auto-redeploy.
 
 ## CI
 
 GitHub Actions runs on every push/PR to `main`:
 
-- Lint
-- Typecheck
+- ESLint
+- Prettier format check
+- TypeScript typecheck
 - Unit tests
 - Production build
 
 See [.github/workflows/ci.yml](.github/workflows/ci.yml).
+
+Pre-commit (Husky + lint-staged) runs ESLint and Prettier on **staged files only** — full validation happens in CI.
