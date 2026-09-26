@@ -34,8 +34,6 @@ Fill in all values in `.env.local`. Server env vars are validated at runtime via
 | `AUTH_SECRET` | Yes      | Session encryption secret (min 32 chars; `openssl rand -base64 32`) |
 | `AUTH_URL`    | Yes      | App URL (`http://localhost:3000` locally)                           |
 
-See [docs/MONGODB_SETUP.md](docs/MONGODB_SETUP.md) for Atlas setup steps.
-
 ### 3. Run the dev server
 
 ```bash
