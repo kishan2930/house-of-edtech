@@ -14,7 +14,7 @@ export function kudosSurfaceClass(template: KudosTemplate | null) {
   return cn(
     'flex flex-col gap-3 rounded-[12px] border-l-[3px] bg-card p-4 text-card-foreground shadow-card',
     template === 'celebration' &&
-      'border-l-accent bg-gradient-to-br from-accent-light/50 to-card shadow-accent-glow',
+      'border-l-accent bg-gradient-to-br from-accent-light/50 to-card shadow-accent-glow dark:from-accent/25',
     template === 'achievement' &&
       'border-l-primary bg-gradient-to-br from-primary-bg to-card shadow-teal-glow',
     template === null && 'border-l-primary-light',

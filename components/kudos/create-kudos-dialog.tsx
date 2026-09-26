@@ -305,7 +305,7 @@ export function CreateKudosDialog({ senderName }: { senderName: string }) {
                       className={
                         option.key === 'celebration'
                           ? 'h-11 min-h-11 rounded-full border-border bg-input text-base font-extrabold text-primary-dark data-pressed:border-accent-dark data-pressed:bg-accent data-pressed:text-accent-foreground data-pressed:shadow-accent-glow'
-                          : 'h-11 min-h-11 rounded-full border-border bg-input text-base font-extrabold text-primary-dark data-pressed:border-primary data-pressed:bg-primary data-pressed:text-primary-foreground data-pressed:shadow-teal-glow'
+                          : 'h-11 min-h-11 rounded-full border-border bg-input text-base font-extrabold text-primary-dark data-pressed:border-ink data-pressed:bg-ink data-pressed:text-input data-pressed:shadow-teal-glow'
                       }
                     >
                       <span aria-hidden="true">{option.emoji}</span>

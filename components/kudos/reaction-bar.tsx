@@ -90,8 +90,8 @@ export function ReactionBar({
             disabled={busy}
             onClick={() => onToggle(reaction.key)}
             className={cn(
-              'inline-flex h-11 min-w-11 items-center justify-center gap-1 rounded-full border border-border bg-input px-3 text-sm font-extrabold text-primary-dark transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-95 motion-reduce:active:scale-100 disabled:opacity-70',
-              'aria-pressed:border-primary aria-pressed:bg-primary aria-pressed:text-primary-foreground aria-pressed:shadow-teal-glow',
+              'inline-flex h-11 min-w-11 items-center justify-center gap-1 rounded-full border border-border bg-input px-3 text-sm font-extrabold text-primary-dark transition-colors outline-none focus-visible:shadow-focus focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-95 motion-reduce:active:scale-100 disabled:opacity-70',
+              'aria-pressed:border-ink aria-pressed:bg-ink aria-pressed:text-input aria-pressed:shadow-teal-glow',
             )}
           >
             <span aria-hidden="true">{reaction.emoji}</span>

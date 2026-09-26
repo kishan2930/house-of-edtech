@@ -33,7 +33,7 @@ export function ProfileMenu({ name }: { name: string }) {
             aria-label={`${name} profile menu`}
           >
             <Avatar>
-              <AvatarFallback className="bg-primary text-primary-foreground">
+              <AvatarFallback className="bg-ink text-input">
                 {initials(name)}
               </AvatarFallback>
             </Avatar>

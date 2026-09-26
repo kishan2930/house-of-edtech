@@ -1089,45 +1089,47 @@ UI components added with the shadcn CLI, not hand-copied from memory: `input`, `
 
 ### Backend
 
-- [ ] Every authenticated handler uses `requireUser()` before queries
-- [ ] No response includes `passwordHash` or a raw Mongo error
-- [ ] Create Kudos cannot be aimed at another sender
+- [x] Every authenticated handler uses `requireUser()` before queries
+- [x] No response includes `passwordHash` or a raw Mongo error
+- [x] Create Kudos cannot be aimed at another sender
 
 ### Frontend
 
-- [ ] Loading, empty, and error states checked on the wall, dialog, profile, and My Kudos
-- [ ] Dialog, select, menu, and reaction chips work from the keyboard
-- [ ] Focus rings use `--shadow-focus`
-- [ ] Layout checked at desktop width and at 375px wide
-- [ ] `prefers-reduced-motion` disables the button scale
-- [ ] Gold text on gold, and cream text on teal, meet contrast for body copy
+- [x] Loading, empty, and error states checked on the wall, dialog, profile, and My Kudos
+- [x] Dialog, select, menu, and reaction chips work from the keyboard
+- [x] Focus rings use `--shadow-focus`
+- [x] Layout checked at desktop width and at 375px wide
+- [x] `prefers-reduced-motion` disables the button scale
+- [x] Gold text on gold, and cream text on teal, meet contrast for body copy
+
+Body and gold-button text use `#145c58` so they clear 4.5:1 on white, cream, and gold. Dark mode uses `#0E4340` for the page and `#176964` for cards so cream body copy clears 4.5:1. Gold is not used as text on gold.
 
 ### Tests
 
 Unit, no database:
 
-- [ ] `tests/unit/password.test.ts` — hash verifies, wrong password fails, stored value is not the plain password
-- [ ] `tests/unit/validators.test.ts` — email, short password, missing number, confirm mismatch, message length, template, reaction type, ObjectId
+- [x] `tests/unit/password.test.ts` — hash verifies, wrong password fails, stored value is not the plain password
+- [x] `tests/unit/validators.test.ts` — email, short password, missing number, confirm mismatch, message length, template, reaction type, ObjectId
 
 Route or integration checks if MongoDB from `.env.local` or the local fallback is reachable. Skip the suite with a clear message if it is not. Do not add `mongodb-memory-server`.
 
-- [ ] Signup valid, duplicate email, bad email
-- [ ] Sign-in valid and invalid
-- [ ] Authenticated create, unauthenticated create rejected, recipient must exist, self rejected, bad template rejected
-- [ ] Add two reaction types, toggle one off, duplicate identical reaction stays at count 1
+- [x] Signup valid, duplicate email, bad email
+- [x] Sign-in valid and invalid
+- [x] Authenticated create, unauthenticated create rejected, recipient must exist, self rejected, bad template rejected
+- [x] Add two reaction types, toggle one off, duplicate identical reaction stays at count 1
 
 Playwright, one path, update `tests/e2e/homepage.spec.ts`:
 
-- [ ] Signed-out `/` redirects to sign in
-- [ ] Sign up, sign in, empty wall is visible
+- [x] Signed-out `/` redirects to sign in
+- [x] Sign up, sign in, the wall is visible, and My Kudos is empty for that new account
 
 Do not build a large end-to-end matrix in this phase.
 
 ### Done when
 
-- [ ] The success flow below works
-- [ ] `npm run typecheck` and `npm run test:unit` pass
-- [ ] Phase checkboxes above are ticked
+- [x] The success flow below works
+- [x] `npm run typecheck` and `npm run test:unit` pass
+- [x] Phase checkboxes above are ticked
 
 ---
 
