@@ -12,7 +12,7 @@ Do not implement roles, departments, managers, comments, notifications, admin, i
 - [x] Phase 2 — Dashboard shell
 - [x] Phase 3 — Create Kudos
 - [x] Phase 4 — Reactions
-- [ ] Phase 5 — Profile pages
+- [x] Phase 5 — Profile pages
 - [ ] Phase 6 — Polish and critical tests
 
 ---
@@ -1066,22 +1066,22 @@ UI components added with the shadcn CLI, not hand-copied from memory: `input`, `
 
 ### Backend
 
-- [ ] No new collections. My Profile uses `GET /api/users/me`
-- [ ] My Kudos uses `GET /api/kudos?view=given` and `view=received`
+- [x] No new collections. My Profile uses `GET /api/users/me`
+- [x] My Kudos uses `GET /api/kudos?view=given` and `view=received`
 
 ### Frontend
 
-- [ ] My Profile shows name and email only
-- [ ] My Kudos has two dashed sections and reuses `kudos-card.tsx`, including reactions
-- [ ] Each list has its own empty copy from the table above
-- [ ] Terms is static copy: a short acceptance-of-use page for Kudos Wall (be kind, no harassment, the company may remove Kudos that break that standard). No editor
-- [ ] Menu links land on these pages
+- [x] My Profile shows name and email only
+- [x] My Kudos has two dashed sections and reuses `kudos-card.tsx`, including reactions
+- [x] Each list has its own empty copy from the table above
+- [x] Terms is static copy: a short acceptance-of-use page for Kudos Wall (be kind, no harassment, the company may remove Kudos that break that standard). No editor
+- [x] Menu links land on these pages
 
 ### Done when
 
-- [ ] Menu reaches My Profile, My Kudos, Terms, and Sign out
-- [ ] Given and received are separate
-- [ ] Profile has no edit form
+- [x] Menu reaches My Profile, My Kudos, Terms, and Sign out
+- [x] Given and received are separate
+- [x] Profile has no edit form
 
 ---
 
