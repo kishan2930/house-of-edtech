@@ -7,7 +7,7 @@ export function Header() {
     <header className="border-b">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link href="/" className="text-sm font-semibold tracking-tight">
-          House of Edtech
+          Kudos Wall
         </Link>
         <ThemeToggle />
       </div>

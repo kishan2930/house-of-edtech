@@ -8,7 +8,7 @@ Do not implement roles, departments, managers, comments, notifications, admin, i
 
 ## Phase tracker
 
-- [ ] Phase 1 — Authentication
+- [x] Phase 1 — Authentication
 - [ ] Phase 2 — Dashboard shell
 - [ ] Phase 3 — Create Kudos
 - [ ] Phase 4 — Reactions
@@ -942,38 +942,38 @@ UI components added with the shadcn CLI, not hand-copied from memory: `input`, `
 
 ### Backend
 
-- [ ] `models/User.ts` with the fields, unique email index, and `passwordHash` select false
-- [ ] `lib/auth/password.ts` hash and verify using the scrypt format above
-- [ ] `lib/validators/auth.ts` signup and sign-in schemas
-- [ ] `lib/api/errors.ts`
-- [ ] `POST /api/auth/signup` returns `201` and the public user, `409` on duplicate email
-- [ ] `auth.ts` `authorize()` loads the user and checks the hash. Wrong password returns `null`
-- [ ] JWT and session callbacks expose `session.user.id`
-- [ ] `types/next-auth.d.ts` types `session.user.id`
-- [ ] `lib/auth/session.ts` `requireUser()`
-- [ ] `middleware.ts` protects `/`, `/profile`, `/my-kudos`, `/terms` and bounces signed-in users away from the auth pages
+- [x] `models/User.ts` with the fields, unique email index, and `passwordHash` select false
+- [x] `lib/auth/password.ts` hash and verify using the scrypt format above
+- [x] `lib/validators/auth.ts` signup and sign-in schemas
+- [x] `lib/api/errors.ts`
+- [x] `POST /api/auth/signup` returns `201` and the public user, `409` on duplicate email
+- [x] `auth.ts` `authorize()` loads the user and checks the hash. Wrong password returns `null`
+- [x] JWT and session callbacks expose `session.user.id`
+- [x] `types/next-auth.d.ts` types `session.user.id`
+- [x] `lib/auth/session.ts` `requireUser()`
+- [x] `middleware.ts` protects `/`, `/profile`, `/my-kudos`, `/terms` and bounces signed-in users away from the auth pages
 
 ### Frontend
 
-- [ ] Apply Flip7 tokens in `app/globals.css` and the font stack, so auth screens are not the default neutral theme
-- [ ] `components/layout/wordmark.tsx` and `components/auth/auth-shell.tsx` (fan, parallelogram, ribbon)
-- [ ] Add shadcn `input`, `field`, `button` variants only if the gold pill cannot be a `className` layout wrapper. Prefer a `variant` if we extend the existing button; otherwise a dedicated gold class in the shell that still uses `Button`
-- [ ] `/sign-up` form: name, email, password, confirm password, Sign up
-- [ ] Client validation with the shared Zod schema, `data-invalid` / `aria-invalid`, spinner while submitting
-- [ ] Success goes to `/sign-in`
-- [ ] `/sign-in` form: email, password, Sign in, link to sign up
-- [ ] `signIn('credentials', { redirect: false })`. Success goes to `/`. Failure shows “Email or password is incorrect.”
-- [ ] `/` for this phase is a protected placeholder that shows the session user’s name, so the session is proven before the wall UI exists
-- [ ] Metadata title becomes Kudos Wall
+- [x] Apply Flip7 tokens in `app/globals.css` and the font stack, so auth screens are not the default neutral theme
+- [x] `components/layout/wordmark.tsx` and `components/auth/auth-shell.tsx` (fan, parallelogram, ribbon)
+- [x] Add shadcn `input`, `field`, `button` variants only if the gold pill cannot be a `className` layout wrapper. Prefer a `variant` if we extend the existing button; otherwise a dedicated gold class in the shell that still uses `Button`
+- [x] `/sign-up` form: name, email, password, confirm password, Sign up
+- [x] Client validation with the shared Zod schema, `data-invalid` / `aria-invalid`, spinner while submitting
+- [x] Success goes to `/sign-in`
+- [x] `/sign-in` form: email, password, Sign in, link to sign up
+- [x] `signIn('credentials', { redirect: false })`. Success goes to `/`. Failure shows “Email or password is incorrect.”
+- [x] `/` for this phase is a protected placeholder that shows the session user’s name, so the session is proven before the wall UI exists
+- [x] Metadata title becomes Kudos Wall
 
 ### Done when
 
-- [ ] New account is stored with a scrypt hash, not a plain password
-- [ ] The same email cannot register twice, and the UI shows the duplicate message
-- [ ] Valid sign-in opens a session and reaches `/`
-- [ ] Invalid sign-in stays on the form with the safe message
-- [ ] Signed-out visit to `/` redirects to `/sign-in`
-- [ ] Sign-out clears access to `/`
+- [x] New account is stored with a scrypt hash, not a plain password
+- [x] The same email cannot register twice, and the UI shows the duplicate message
+- [x] Valid sign-in opens a session and reaches `/`
+- [x] Invalid sign-in stays on the form with the safe message
+- [x] Signed-out visit to `/` redirects to `/sign-in`
+- [x] Sign-out clears access to `/`
 
 ---
 

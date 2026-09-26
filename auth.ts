@@ -1,16 +1,14 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
-import { getServerEnv } from '@/lib/env';
+import { authConfig } from '@/auth.config';
+import { verifyPassword } from '@/lib/auth/password';
+import { connectDB } from '@/lib/db';
+import { signInSchema } from '@/lib/validators/auth';
+import { User } from '@/models/User';
 
-/**
- * Auth.js configuration (scaffold only — no real login UI yet).
- *
- * The Credentials provider checks email/password against hardcoded test values.
- * In production you'd verify against your database instead.
- */
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  secret: getServerEnv().AUTH_SECRET,
+  ...authConfig,
   providers: [
     Credentials({
       name: 'Credentials',
@@ -19,26 +17,42 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       authorize: async (credentials) => {
-        const email = credentials?.email as string | undefined;
-        const password = credentials?.password as string | undefined;
+        const parsed = signInSchema.safeParse(credentials);
 
-        // Placeholder test user — replace with DB lookup later
-        if (email === 'test@example.com' && password === 'password') {
-          return {
-            id: '1',
-            name: 'Test User',
-            email: 'test@example.com',
-          };
+        if (!parsed.success) {
+          return null;
         }
 
-        return null;
+        try {
+          await connectDB();
+
+          const user = await User.findOne({ email: parsed.data.email }).select(
+            '+passwordHash',
+          );
+
+          if (!user) {
+            return null;
+          }
+
+          const passwordMatches = await verifyPassword(
+            parsed.data.password,
+            user.passwordHash,
+          );
+
+          if (!passwordMatches) {
+            return null;
+          }
+
+          return {
+            id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+          };
+        } catch (error) {
+          console.error('Sign in failed:', error);
+          return null;
+        }
       },
     }),
   ],
-  pages: {
-    signIn: '/',
-  },
-  session: {
-    strategy: 'jwt',
-  },
 });

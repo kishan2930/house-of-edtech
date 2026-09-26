@@ -1,10 +1,9 @@
-export { auth as middleware } from '@/auth';
+import NextAuth from 'next-auth';
 
-/**
- * Optional auth middleware scaffold.
- * Currently matches all routes but does not block unauthenticated users.
- * Uncomment the authorized callback in auth.ts when you want route protection.
- */
+import { authConfig } from '@/auth.config';
+
+export const { auth: middleware } = NextAuth(authConfig);
+
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
