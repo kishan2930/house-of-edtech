@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState, type FormEvent } from 'react';
 
 import { KudosPreview } from '@/components/kudos/kudos-preview';
+import { KudosSticker } from '@/components/kudos/kudos-sticker';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -326,7 +327,9 @@ export function CreateKudosDialog({ senderName }: { senderName: string }) {
                         option.pressed,
                       )}
                     >
-                      <span aria-hidden="true">{option.emoji}</span>
+                      <span aria-hidden="true" className="inline-flex">
+                        <KudosSticker src={option.sticker} size={22} />
+                      </span>
                       {option.label}
                     </ToggleGroupItem>
                   ))}

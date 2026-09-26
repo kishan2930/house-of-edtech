@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 
+import { KudosSticker } from '@/components/kudos/kudos-sticker';
 import { ReactionBar } from '@/components/kudos/reaction-bar';
 import { templateOptions } from '@/lib/kudos/templates';
 import type { KudosItem, KudosTemplate } from '@/lib/kudos/types';
@@ -113,16 +114,16 @@ export function KudosCardFace({
               selected.wash,
             )}
           />
-          <span
-            className="absolute top-2 right-2 text-8xl leading-none"
+          <KudosSticker
+            src={selected.sticker}
+            size={120}
+            className="absolute top-1 right-1"
             style={{
               maskImage: 'linear-gradient(to left, #000 28%, transparent 88%)',
               WebkitMaskImage:
                 'linear-gradient(to left, #000 28%, transparent 88%)',
             }}
-          >
-            {selected.emoji}
-          </span>
+          />
         </div>
       ) : null}
       {selected ? <p className="sr-only">{selected.label}</p> : null}

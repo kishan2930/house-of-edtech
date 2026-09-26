@@ -1,3 +1,4 @@
+import { fluentSticker } from '@/lib/kudos/stickers';
 import { kudosTemplates, type KudosTemplate } from '@/lib/kudos/types';
 
 export { kudosTemplates };
@@ -9,7 +10,7 @@ export function isKudosTemplate(value: string): value is KudosTemplate {
 export const templateOptions: {
   key: KudosTemplate;
   label: string;
-  emoji: string;
+  sticker: string;
   surface: string;
   wash: string;
   quote: string;
@@ -20,7 +21,7 @@ export const templateOptions: {
   {
     key: 'celebration',
     label: 'Celebration',
-    emoji: '🎉',
+    sticker: fluentSticker('Party popper'),
     surface:
       'border-l-accent bg-gradient-to-br from-accent-light/40 to-card shadow-accent-glow dark:from-accent/20',
     wash: 'from-accent/55',
@@ -33,7 +34,7 @@ export const templateOptions: {
   {
     key: 'achievement',
     label: 'Achievement',
-    emoji: '🏆',
+    sticker: fluentSticker('Trophy'),
     surface:
       'border-l-primary bg-gradient-to-br from-primary-bg to-card shadow-teal-glow dark:from-primary/25',
     wash: 'from-primary/35',
@@ -46,7 +47,7 @@ export const templateOptions: {
   {
     key: 'teamwork',
     label: 'Teamwork',
-    emoji: '🤝',
+    sticker: fluentSticker('Handshake'),
     surface:
       'border-l-sky bg-gradient-to-br from-sky/20 to-card shadow-card dark:from-sky/25',
     wash: 'from-sky/45',
@@ -59,7 +60,7 @@ export const templateOptions: {
   {
     key: 'gratitude',
     label: 'Gratitude',
-    emoji: '🙏',
+    sticker: fluentSticker('Folded hands', 'folded_hands_3d_default.png'),
     surface:
       'border-l-coral-dark bg-gradient-to-br from-coral-light/30 to-card shadow-coral-glow dark:from-coral-light/20',
     wash: 'from-coral-light/55',
@@ -72,7 +73,7 @@ export const templateOptions: {
   {
     key: 'innovation',
     label: 'Innovation',
-    emoji: '💡',
+    sticker: fluentSticker('Light bulb'),
     surface:
       'border-l-accent-dark bg-gradient-to-br from-input to-card shadow-accent-glow dark:from-accent/15',
     wash: 'from-accent-light/70',
@@ -85,7 +86,7 @@ export const templateOptions: {
   {
     key: 'leadership',
     label: 'Leadership',
-    emoji: '⭐',
+    sticker: fluentSticker('Star'),
     surface:
       'border-l-ink bg-gradient-to-br from-primary-bg to-card shadow-teal-glow dark:from-primary/20',
     wash: 'from-primary/30',
@@ -98,7 +99,7 @@ export const templateOptions: {
   {
     key: 'kindness',
     label: 'Kindness',
-    emoji: '💛',
+    sticker: fluentSticker('Yellow heart'),
     surface:
       'border-l-coral-light bg-gradient-to-br from-accent-light/35 to-card shadow-card dark:from-accent/15',
     wash: 'from-coral-light/50',
@@ -111,7 +112,7 @@ export const templateOptions: {
   {
     key: 'welcome',
     label: 'Welcome',
-    emoji: '👋',
+    sticker: fluentSticker('Waving hand', 'waving_hand_3d_default.png'),
     surface:
       'border-l-primary-light bg-gradient-to-br from-primary-light/25 to-card shadow-teal-glow dark:from-primary-light/20',
     wash: 'from-primary-light/45',
