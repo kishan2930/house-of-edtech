@@ -84,9 +84,9 @@ tests/
   e2e/              # Playwright tests
 ```
 
-## Footer (assignment requirement)
+## Footer
 
-Before submission, update `components/layout/footer.tsx` with your name, GitHub profile URL, and LinkedIn profile URL.
+The site footer names Kishan Ambaliya and links to GitHub and LinkedIn.
 
 ## Deployment (Vercel)
 

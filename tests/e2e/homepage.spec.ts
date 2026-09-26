@@ -31,7 +31,7 @@ test('signed-out home redirects to sign in', async ({ page }) => {
     page.getByRole('heading', { name: 'Welcome back' }),
   ).toBeVisible();
   await expect(page.getByRole('link', { name: 'Kudos Wall' })).toBeVisible();
-  await expect(page.getByText('Developer name')).toBeVisible();
+  await expect(page.getByText('Kishan Ambaliya')).toBeVisible();
 });
 
 test('sign up, sign in, and see an empty wall', async ({ page }) => {
