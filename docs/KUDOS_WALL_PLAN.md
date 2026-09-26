@@ -11,7 +11,7 @@ Do not implement roles, departments, managers, comments, notifications, admin, i
 - [x] Phase 1 — Authentication
 - [x] Phase 2 — Dashboard shell
 - [x] Phase 3 — Create Kudos
-- [ ] Phase 4 — Reactions
+- [x] Phase 4 — Reactions
 - [ ] Phase 5 — Profile pages
 - [ ] Phase 6 — Polish and critical tests
 
@@ -1039,26 +1039,26 @@ UI components added with the shadcn CLI, not hand-copied from memory: `input`, `
 
 ### Backend
 
-- [ ] `models/Reaction.ts` and the unique index
-- [ ] `lib/kudos/reactions.ts` and `lib/validators/reaction.ts`
-- [ ] `POST /api/kudos/[id]/reactions`
-- [ ] `DELETE /api/kudos/[id]/reactions/[type]`
-- [ ] List and detail responses fill `reactions.counts` and `reactions.mine` from one reaction query per page
+- [x] `models/Reaction.ts` and the unique index
+- [x] `lib/kudos/reactions.ts` and `lib/validators/reaction.ts`
+- [x] `POST /api/kudos/[id]/reactions`
+- [x] `DELETE /api/kudos/[id]/reactions/[type]`
+- [x] List and detail responses fill `reactions.counts` and `reactions.mine` from one reaction query per page
 
 ### Frontend
 
-- [ ] `reaction-bar.tsx` on each card: five chips, emoji, count, accessible name
-- [ ] Click adds. Click again removes. Other types on that card stay
-- [ ] Selected style follows `mine`
-- [ ] Chip disables while its own request is in flight
-- [ ] Counts update from the response
+- [x] `reaction-bar.tsx` on each card: five chips, emoji, count, accessible name
+- [x] Click adds. Click again removes. Other types on that card stay
+- [x] Selected style follows `mine`
+- [x] Chip disables while its own request is in flight
+- [x] Counts update from the response
 
 ### Done when
 
-- [ ] One user can add heart, clap, and fire on the same Kudos
-- [ ] Removing heart decreases that count only
-- [ ] A second identical heart does not increase the count
-- [ ] Logged-out reaction calls return `401`
+- [x] One user can add heart, clap, and fire on the same Kudos
+- [x] Removing heart decreases that count only
+- [x] A second identical heart does not increase the count
+- [x] Logged-out reaction calls return `401`
 
 ---
 

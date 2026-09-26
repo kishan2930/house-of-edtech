@@ -44,7 +44,11 @@ export function KudosCard({ item }: { item: KudosItem }) {
       <time dateTime={item.createdAt} className="text-sm text-muted-foreground">
         {dateFormat.format(new Date(item.createdAt))}
       </time>
-      <ReactionBar counts={item.reactions.counts} />
+      <ReactionBar
+        kudosId={item.id}
+        counts={item.reactions.counts}
+        mine={item.reactions.mine}
+      />
     </article>
   );
 }

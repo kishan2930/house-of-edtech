@@ -18,10 +18,13 @@ export async function listKudos(
 
   const docs = await Kudos.find(filter).sort({ createdAt: -1 }).limit(50);
 
-  return { kudos: await serializeKudosList(docs) };
+  return { kudos: await serializeKudosList(docs, userId) };
 }
 
-export async function getKudos(id: string): Promise<KudosItem | null> {
+export async function getKudos(
+  id: string,
+  userId: string,
+): Promise<KudosItem | null> {
   await connectDB();
 
   const doc = await Kudos.findById(id);
@@ -30,6 +33,6 @@ export async function getKudos(id: string): Promise<KudosItem | null> {
     return null;
   }
 
-  const [kudos] = await serializeKudosList([doc]);
+  const [kudos] = await serializeKudosList([doc], userId);
   return kudos ?? null;
 }

@@ -26,7 +26,7 @@ export async function GET(_request: Request, context: RouteContext) {
   }
 
   try {
-    const kudos = await getKudos(id);
+    const kudos = await getKudos(id, sessionUser.id);
 
     if (!kudos) {
       return notFoundError();
