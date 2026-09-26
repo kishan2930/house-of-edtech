@@ -1,36 +1,104 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# House of Edtech — Full-Stack Assignment Boilerplate
+
+Next.js 16 full-stack boilerplate for the House of Edtech assignment. Includes TypeScript, Tailwind CSS, MongoDB (Mongoose), shadcn/ui, testing, and CI/CD.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS + shadcn/ui
+- **Database:** MongoDB Atlas + Mongoose
+- **Testing:** Vitest (unit) + Playwright (e2e)
+- **CI/CD:** GitHub Actions + Vercel
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Set up environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+Fill in your MongoDB Atlas connection string. See [docs/MONGODB_SETUP.md](docs/MONGODB_SETUP.md) for a step-by-step guide.
+
+### 3. Run the dev server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Verify database connection
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+curl http://localhost:3000/api/health/db
+```
 
-## Learn More
+Expected: `{ "connected": true, "count": 0 }`
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Command             | Description              |
+| ------------------- | ------------------------ |
+| `npm run dev`       | Start development server |
+| `npm run build`     | Production build         |
+| `npm run lint`      | Run ESLint               |
+| `npm run typecheck` | Run TypeScript check     |
+| `npm run format`    | Format with Prettier     |
+| `npm run test:unit` | Run Vitest unit tests    |
+| `npm run test:e2e`  | Run Playwright e2e tests |
+| `npm run test`      | Run all tests            |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+app/
+  api/              # Route Handlers (backend)
+  (routes)/         # Future pages
+components/
+  ui/               # shadcn/ui components
+  layout/           # Header, footer
+lib/
+  db.ts             # MongoDB connection singleton
+  validators/       # Zod schemas
+models/             # Mongoose models
+tests/
+  unit/             # Vitest tests
+  e2e/              # Playwright tests
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment Variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Variable          | Required | Description                                       |
+| ----------------- | -------- | ------------------------------------------------- |
+| `MONGODB_URI`     | Yes      | MongoDB Atlas connection string                   |
+| `NEXTAUTH_SECRET` | Phase 7  | Random secret for session encryption              |
+| `NEXTAUTH_URL`    | Phase 7  | Deployed URL (e.g. `https://your-app.vercel.app`) |
+
+## Deployment (Vercel)
+
+1. Push this repo to your personal GitHub account.
+2. Sign in to [vercel.com](https://vercel.com) with GitHub.
+3. Click **Add New Project** → import this repository.
+4. Vercel auto-detects Next.js — no extra config needed.
+5. Add environment variables in **Settings → Environment Variables**:
+   - `MONGODB_URI` — your Atlas connection string (use `0.0.0.0/0` in Atlas Network Access for Vercel)
+6. Click **Deploy**. Future merges to `main` auto-redeploy.
+
+## CI
+
+GitHub Actions runs on every push/PR to `main`:
+
+- Lint
+- Typecheck
+- Unit tests
+- Production build
+
+See [.github/workflows/ci.yml](.github/workflows/ci.yml).
