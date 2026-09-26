@@ -41,7 +41,10 @@ export function ProfileMenu({ name }: { name: string }) {
           </Button>
         }
       />
-      <DropdownMenuContent align="end" className="min-w-48 bg-input">
+      <DropdownMenuContent
+        align="end"
+        className="min-w-48 bg-input text-primary-dark"
+      >
         <DropdownMenuGroup>
           <DropdownMenuItem
             className="min-h-11"

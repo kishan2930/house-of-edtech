@@ -1,7 +1,11 @@
-import type { ReactNode } from 'react';
+'use client';
 
+import { useState, type ReactNode } from 'react';
+
+import { KudosManageDialog } from '@/components/kudos/kudos-manage-dialog';
 import { KudosSticker } from '@/components/kudos/kudos-sticker';
 import { ReactionBar } from '@/components/kudos/reaction-bar';
+import { canEditKudos } from '@/lib/kudos/edit-window';
 import { templateOptions } from '@/lib/kudos/templates';
 import type { KudosItem, KudosTemplate } from '@/lib/kudos/types';
 import { cn } from '@/lib/utils';
@@ -82,6 +86,8 @@ export function KudosCardFace({
   footer,
   live = false,
   fill = false,
+  onActivate,
+  activateLabel,
 }: {
   senderName: string;
   recipientName: string | null;
@@ -91,6 +97,8 @@ export function KudosCardFace({
   footer?: ReactNode;
   live?: boolean;
   fill?: boolean;
+  onActivate?: () => void;
+  activateLabel?: string;
 }) {
   const selected = templateOptions.find((option) => option.key === template);
   const trimmedMessage = message.trim();
@@ -127,42 +135,47 @@ export function KudosCardFace({
         </div>
       ) : null}
       {selected ? <p className="sr-only">{selected.label}</p> : null}
-      <div className="relative flex flex-col gap-1.5 pr-16">
-        <PersonRow
-          name={senderName}
-          circleClass={giverClass}
-          placeholder="Your name"
-        />
-        <p className="pl-[3.125rem] text-sm text-muted-foreground">to</p>
-        <PersonRow
-          name={recipientName}
-          circleClass={nameClass(recipientName, receiverClass)}
-          placeholder="Select a teammate"
-        />
-      </div>
-      <blockquote className="relative flex gap-1.5">
-        <span
-          aria-hidden="true"
-          className="pt-0.5 font-serif text-5xl leading-none text-foreground/35"
-        >
-          “
-        </span>
-        <p
-          className={cn(
-            'min-w-0 flex-1 rounded-lg px-3 py-2.5 text-base leading-relaxed font-medium',
-            selected?.quote ?? 'bg-primary-bg',
-            trimmedMessage ? 'text-card-foreground' : 'text-muted-foreground',
-          )}
-        >
-          {trimmedMessage || 'Write a message'}
-        </p>
-        <span
-          aria-hidden="true"
-          className="self-end pb-0.5 font-serif text-5xl leading-none text-foreground/35"
-        >
-          ”
-        </span>
-      </blockquote>
+      <CardDetails onActivate={onActivate} activateLabel={activateLabel}>
+        <div className="relative flex flex-col gap-1.5 pr-16">
+          <PersonRow
+            name={senderName}
+            circleClass={giverClass}
+            placeholder="Your name"
+          />
+          <p className="pl-[3.125rem] text-sm text-muted-foreground">to</p>
+          <PersonRow
+            name={recipientName}
+            circleClass={nameClass(recipientName, receiverClass)}
+            placeholder="Select a teammate"
+          />
+        </div>
+        <blockquote className="relative flex gap-1.5">
+          <span
+            aria-hidden="true"
+            className="pt-0.5 font-serif text-5xl leading-none text-foreground/35"
+          >
+            “
+          </span>
+          <p
+            className={cn(
+              'min-w-0 flex-1 rounded-lg px-3 py-2.5 text-base leading-relaxed font-medium',
+              selected?.quote ?? 'bg-primary-bg',
+              trimmedMessage ? 'text-card-foreground' : 'text-muted-foreground',
+            )}
+          >
+            {trimmedMessage || 'Write a message'}
+          </p>
+          <span
+            aria-hidden="true"
+            className="self-end pb-0.5 font-serif text-5xl leading-none text-foreground/35"
+          >
+            ”
+          </span>
+        </blockquote>
+        {activateLabel ? (
+          <p className="text-sm font-extrabold text-primary">{activateLabel}</p>
+        ) : null}
+      </CardDetails>
       {createdAt || footer ? (
         <div className="relative mt-auto flex items-end justify-between gap-3">
           <div className="min-w-0 flex-1">{footer}</div>
@@ -180,26 +193,77 @@ export function KudosCardFace({
   );
 }
 
+function CardDetails({
+  onActivate,
+  activateLabel,
+  children,
+}: {
+  onActivate?: () => void;
+  activateLabel?: string;
+  children: ReactNode;
+}) {
+  if (!onActivate) {
+    return <div className="flex flex-col gap-4">{children}</div>;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onActivate}
+      aria-label={
+        activateLabel === 'Delete' ? 'Delete this Kudos' : 'Edit this Kudos'
+      }
+      className="flex w-full flex-col gap-4 rounded-md text-left outline-none focus-visible:shadow-focus"
+    >
+      {children}
+    </button>
+  );
+}
+
 function nameClass(name: string | null, circleClass: string) {
   return name ? circleClass : emptyReceiver;
 }
 
-export function KudosCard({ item }: { item: KudosItem }) {
+export function KudosCard({
+  item,
+  viewerId,
+}: {
+  item: KudosItem;
+  viewerId?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const owned = Boolean(viewerId) && item.sender.id === viewerId;
+  const editable = owned && canEditKudos(item.createdAt);
+
   return (
-    <KudosCardFace
-      senderName={item.sender.name}
-      recipientName={item.recipient.name}
-      message={item.message}
-      template={item.template}
-      createdAt={item.createdAt}
-      fill
-      footer={
-        <ReactionBar
-          kudosId={item.id}
-          counts={item.reactions.counts}
-          mine={item.reactions.mine}
+    <>
+      <KudosCardFace
+        senderName={item.sender.name}
+        recipientName={item.recipient.name}
+        message={item.message}
+        template={item.template}
+        createdAt={item.createdAt}
+        fill
+        onActivate={owned ? () => setOpen(true) : undefined}
+        activateLabel={
+          owned ? (editable ? 'Edit message' : 'Delete') : undefined
+        }
+        footer={
+          <ReactionBar
+            kudosId={item.id}
+            counts={item.reactions.counts}
+            mine={item.reactions.mine}
+          />
+        }
+      />
+      {owned ? (
+        <KudosManageDialog
+          key={open ? 'open' : 'closed'}
+          item={item}
+          open={open}
+          onOpenChange={setOpen}
         />
-      }
-    />
+      ) : null}
+    </>
   );
 }

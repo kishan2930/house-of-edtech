@@ -5,10 +5,12 @@ import { cn } from '@/lib/utils';
 export function PageHeading({
   title,
   wide = false,
+  action,
   children,
 }: {
   title: string;
   wide?: boolean;
+  action?: ReactNode;
   children?: ReactNode;
 }) {
   return (
@@ -18,9 +20,12 @@ export function PageHeading({
         wide ? 'max-w-6xl' : 'max-w-3xl',
       )}
     >
-      <h1 className="border-b border-dashed border-primary-light pb-3 text-2xl font-extrabold tracking-[0.04em] text-foreground">
-        {title}
-      </h1>
+      <div className="flex items-center justify-between gap-4 border-b border-dashed border-primary-light pb-3">
+        <h1 className="text-2xl font-extrabold tracking-[0.04em] text-foreground">
+          {title}
+        </h1>
+        {action}
+      </div>
       {children}
     </section>
   );

@@ -27,6 +27,14 @@ export function parseCreateKudos(body: unknown) {
   return createKudosSchema.safeParse(omitSenderId(body));
 }
 
+export const updateKudosSchema = z.object({
+  message: createKudosSchema.shape.message,
+});
+
+export function parseUpdateKudos(body: unknown) {
+  return updateKudosSchema.safeParse(body);
+}
+
 function omitSenderId(body: unknown) {
   if (typeof body !== 'object' || body === null || Array.isArray(body)) {
     return body;

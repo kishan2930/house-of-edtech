@@ -37,11 +37,13 @@ async function MyKudosLists() {
         title="Kudos given"
         empty="You have not given Kudos yet."
         kudos={given.kudos}
+        viewerId={user.id}
       />
       <KudosSection
         title="Kudos received"
         empty="You have not received Kudos yet."
         kudos={received.kudos}
+        viewerId={user.id}
       />
     </div>
   );
@@ -51,10 +53,12 @@ function KudosSection({
   title,
   empty,
   kudos,
+  viewerId,
 }: {
   title: string;
   empty: string;
   kudos: KudosItem[];
+  viewerId: string;
 }) {
   return (
     <section className="flex flex-col gap-4">
@@ -73,7 +77,7 @@ function KudosSection({
         <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {kudos.map((item) => (
             <li key={item.id} className="min-w-0">
-              <KudosCard item={item} />
+              <KudosCard item={item} viewerId={viewerId} />
             </li>
           ))}
         </ul>
