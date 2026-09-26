@@ -24,7 +24,7 @@ async function WallFeed() {
     redirect('/sign-in');
   }
 
-  const { kudos } = await listKudos();
+  const { kudos } = await listKudos(user.id, 'wall');
 
   return <KudosWall kudos={kudos} />;
 }

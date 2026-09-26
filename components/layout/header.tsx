@@ -2,8 +2,8 @@ import Link from 'next/link';
 
 import { ProfileMenu } from '@/components/layout/profile-menu';
 import { Wordmark } from '@/components/layout/wordmark';
+import { CreateKudosDialog } from '@/components/kudos/create-kudos-dialog';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { Button } from '@/components/ui/button';
 import { auth } from '@/auth';
 
 export async function Header() {
@@ -22,9 +22,7 @@ export async function Header() {
         <div className="flex flex-wrap items-center justify-end gap-2">
           {name ? (
             <>
-              <Button type="button" variant="gold" size="cta" disabled>
-                Create Kudos
-              </Button>
+              <CreateKudosDialog senderName={name} />
               <ProfileMenu name={name} />
             </>
           ) : null}

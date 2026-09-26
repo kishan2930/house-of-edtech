@@ -1,3 +1,4 @@
+import { KudosCard } from '@/components/kudos/kudos-card';
 import {
   Empty,
   EmptyDescription,
@@ -23,7 +24,9 @@ export function KudosWall({ kudos }: { kudos: KudosItem[] }) {
   return (
     <ul className="flex flex-col gap-4">
       {kudos.map((item) => (
-        <li key={item.id}>{item.message}</li>
+        <li key={item.id}>
+          <KudosCard item={item} />
+        </li>
       ))}
     </ul>
   );

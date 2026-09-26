@@ -10,7 +10,7 @@ Do not implement roles, departments, managers, comments, notifications, admin, i
 
 - [x] Phase 1 — Authentication
 - [x] Phase 2 — Dashboard shell
-- [ ] Phase 3 — Create Kudos
+- [x] Phase 3 — Create Kudos
 - [ ] Phase 4 — Reactions
 - [ ] Phase 5 — Profile pages
 - [ ] Phase 6 — Polish and critical tests
@@ -1005,33 +1005,33 @@ UI components added with the shadcn CLI, not hand-copied from memory: `input`, `
 
 ### Backend
 
-- [ ] `models/Kudos.ts` and indexes
-- [ ] `lib/kudos/templates.ts`, `lib/validators/kudos.ts`, `lib/kudos/serialize.ts`
-- [ ] `GET /api/users` for the dropdown
-- [ ] `GET /api/users/[id]`
-- [ ] `POST /api/kudos` with server-side sender, self-recipient rejection, and recipient existence check
-- [ ] `GET /api/kudos` returns the newest 50 for `wall`, `given`, and `received`
-- [ ] `GET /api/kudos/[id]`
-- [ ] Reaction block on each item is zeros and an empty `mine` array
+- [x] `models/Kudos.ts` and indexes
+- [x] `lib/kudos/templates.ts`, `lib/validators/kudos.ts`, `lib/kudos/serialize.ts`
+- [x] `GET /api/users` for the dropdown
+- [x] `GET /api/users/[id]`
+- [x] `POST /api/kudos` with server-side sender, self-recipient rejection, and recipient existence check
+- [x] `GET /api/kudos` returns the newest 50 for `wall`, `given`, and `received`
+- [x] `GET /api/kudos/[id]`
+- [x] Reaction block on each item is zeros and an empty `mine` array
 
 ### Frontend
 
-- [ ] Enable Create Kudos. It opens a `Dialog` with `DialogTitle` “Create Kudos”
-- [ ] Desktop two columns. Under 768px, preview then form, scroll locked to the dialog
-- [ ] Recipient `Select` populated from `GET /api/users`. No free-text name
-- [ ] Message `Textarea`
-- [ ] Template `ToggleGroup` with Celebration and Achievement
-- [ ] Live preview uses `kudos-preview.tsx` and the same card visuals as the wall
-- [ ] Submit validates, disables the button, shows `Spinner`, then closes and resets
-- [ ] Wall shows the new card without a manual browser refresh
-- [ ] Card shows template, sender → recipient, message, and date. Reaction row can render disabled until Phase 4
+- [x] Enable Create Kudos. It opens a `Dialog` with `DialogTitle` “Create Kudos”
+- [x] Desktop two columns. Under 768px, preview then form, scroll locked to the dialog
+- [x] Recipient `Select` populated from `GET /api/users`. No free-text name
+- [x] Message `Textarea`
+- [x] Template `ToggleGroup` with Celebration and Achievement
+- [x] Live preview uses `kudos-preview.tsx` and the same card visuals as the wall
+- [x] Submit validates, disables the button, shows `Spinner`, then closes and resets
+- [x] Wall shows the new card without a manual browser refresh
+- [x] Card shows template, sender → recipient, message, and date. Reaction row can render disabled until Phase 4
 
 ### Done when
 
-- [ ] Signed-in user can select someone else, write a message, pick a template, watch the preview, publish, and see the card on the wall
-- [ ] Logged-out `POST /api/kudos` returns `401`
-- [ ] Self-recipient and unknown template are rejected
-- [ ] A document in `kudos` has `senderId`, `recipientId`, `message`, `template`, `createdAt`
+- [x] Signed-in user can select someone else, write a message, pick a template, watch the preview, publish, and see the card on the wall
+- [x] Logged-out `POST /api/kudos` returns `401`
+- [x] Self-recipient and unknown template are rejected
+- [x] A document in `kudos` has `senderId`, `recipientId`, `message`, `template`, `createdAt`
 
 ---
 
