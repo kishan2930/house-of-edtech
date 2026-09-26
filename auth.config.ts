@@ -14,8 +14,8 @@ function isProtectedPath(pathname: string) {
 }
 
 /**
- * Edge-safe Auth.js config used by middleware.
- * Database lookups stay in auth.ts so mongoose is not bundled into middleware.
+ * Edge-safe Auth.js config used by the request proxy.
+ * Database lookups stay in auth.ts so mongoose is not bundled into the proxy.
  */
 export const authConfig = {
   secret: getServerEnv().AUTH_SECRET,
