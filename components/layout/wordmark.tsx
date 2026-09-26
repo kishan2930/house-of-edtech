@@ -8,17 +8,21 @@ const fanCards = [
   { rotation: 'rotate-[24deg]', tone: 'bg-input' },
 ];
 
-function FanCards() {
+function FanCards({ dense = false }: { dense?: boolean }) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-x-0 bottom-8 flex items-end justify-center"
+      className={cn(
+        'pointer-events-none absolute inset-x-0 flex items-end justify-center',
+        dense ? 'bottom-4' : 'bottom-8',
+      )}
     >
       {fanCards.map((card) => (
         <span
           key={card.rotation}
           className={cn(
-            'h-24 w-14 origin-bottom -mx-3 rounded-md border-[1.5px] border-primary-dark shadow-card',
+            'origin-bottom rounded-md border-[1.5px] border-primary-dark shadow-card',
+            dense ? 'h-16 w-11 -mx-1' : 'h-24 w-14 -mx-3',
             card.rotation,
             card.tone,
           )}
@@ -31,9 +35,11 @@ function FanCards() {
 export function Wordmark({
   decorated = false,
   compact = false,
+  dense = false,
 }: {
   decorated?: boolean;
   compact?: boolean;
+  dense?: boolean;
 }) {
   if (compact) {
     return (
@@ -46,11 +52,26 @@ export function Wordmark({
   }
 
   return (
-    <div className="flex flex-col items-center gap-3">
-      <div className="relative flex h-40 w-72 items-end justify-center">
-        {decorated ? <FanCards /> : null}
+    <div
+      className={cn(
+        'mx-auto flex w-fit flex-col items-center',
+        dense ? 'gap-2' : 'gap-3',
+      )}
+    >
+      <div
+        className={cn(
+          'relative flex items-end justify-center overflow-visible',
+          dense ? 'h-24 w-64' : 'h-40 w-72',
+        )}
+      >
+        {decorated ? <FanCards dense={dense} /> : null}
         <div className="relative z-10 mb-1 -rotate-3 -skew-x-6 rounded-sm border-[1.5px] border-primary-dark bg-input px-4 py-2 shadow-card">
-          <p className="skew-x-6 text-4xl font-extrabold tracking-[0.04em] text-primary-dark">
+          <p
+            className={cn(
+              'skew-x-6 font-extrabold tracking-[0.04em] text-primary-dark',
+              dense ? 'text-xl' : 'text-4xl',
+            )}
+          >
             Kudos Wall
           </p>
         </div>
