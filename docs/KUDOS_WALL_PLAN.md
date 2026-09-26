@@ -9,7 +9,7 @@ Do not implement roles, departments, managers, comments, notifications, admin, i
 ## Phase tracker
 
 - [x] Phase 1 — Authentication
-- [ ] Phase 2 — Dashboard shell
+- [x] Phase 2 — Dashboard shell
 - [ ] Phase 3 — Create Kudos
 - [ ] Phase 4 — Reactions
 - [ ] Phase 5 — Profile pages
@@ -981,23 +981,23 @@ UI components added with the shadcn CLI, not hand-copied from memory: `input`, `
 
 ### Backend
 
-- [ ] `GET /api/users/me`
-- [ ] `GET /api/kudos` returns `{ kudos: [] }` until Phase 3 writes rows, already in the final JSON shape
+- [x] `GET /api/users/me`
+- [x] `GET /api/kudos` returns `{ kudos: [] }` until Phase 3 writes rows, already in the final JSON shape
 
 ### Frontend
 
-- [ ] Replace `app/page.tsx` with the wall page. Server component loads the session and the initial list
-- [ ] Header: wordmark, gold Create Kudos button (rendered, disabled until Phase 3), profile control with name and avatar fallback
-- [ ] Profile menu: My Profile, My Kudos, Terms & Conditions, Sign out
-- [ ] `/profile`, `/my-kudos`, and `/terms` exist as simple titled pages so the links resolve
-- [ ] Wall states: `Skeleton` while loading, error message with retry, `Empty` state “No Kudos yet. Recognize a teammate.”
-- [ ] Header wraps cleanly under 768px. Menu remains usable
-- [ ] Theme toggle stays in the header
+- [x] Replace `app/page.tsx` with the wall page. Server component loads the session and the initial list
+- [x] Header: wordmark, gold Create Kudos button (rendered, disabled until Phase 3), profile control with name and avatar fallback
+- [x] Profile menu: My Profile, My Kudos, Terms & Conditions, Sign out
+- [x] `/profile`, `/my-kudos`, and `/terms` exist as simple titled pages so the links resolve
+- [x] Wall states: `Skeleton` while loading, error message with retry, `Empty` state “No Kudos yet. Recognize a teammate.”
+- [x] Header wraps cleanly under 768px. Menu remains usable
+- [x] Theme toggle stays in the header
 
 ### Done when
 
-- [ ] Signed-in user sees the empty wall, their name, and can open the menu
-- [ ] Sign out returns to `/sign-in` and `/` is blocked
+- [x] Signed-in user sees the empty wall, their name, and can open the menu
+- [x] Sign out returns to `/sign-in` and `/` is blocked
 
 ---
 

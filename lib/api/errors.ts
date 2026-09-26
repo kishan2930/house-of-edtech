@@ -37,6 +37,14 @@ export function duplicateEmailError() {
   );
 }
 
+export function unauthorized() {
+  return NextResponse.json({ error: 'Sign in to continue.' }, { status: 401 });
+}
+
+export function notFoundError() {
+  return NextResponse.json({ error: 'Not found.' }, { status: 404 });
+}
+
 export function safeServerError() {
   return NextResponse.json(
     { error: 'Something went wrong. Try again.' },

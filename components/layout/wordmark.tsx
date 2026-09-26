@@ -28,7 +28,23 @@ function FanCards() {
   );
 }
 
-export function Wordmark({ decorated = false }: { decorated?: boolean }) {
+export function Wordmark({
+  decorated = false,
+  compact = false,
+}: {
+  decorated?: boolean;
+  compact?: boolean;
+}) {
+  if (compact) {
+    return (
+      <span className="inline-flex -rotate-2 -skew-x-6 rounded-sm border-[1.5px] border-primary-dark bg-input px-2.5 py-1 shadow-card">
+        <span className="skew-x-6 text-sm font-extrabold tracking-[0.04em] text-primary-dark">
+          Kudos Wall
+        </span>
+      </span>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center gap-3">
       <div className="relative flex h-40 w-72 items-end justify-center">
