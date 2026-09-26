@@ -2,6 +2,9 @@ import { z } from 'zod';
 
 import { kudosTemplates } from '@/lib/kudos/templates';
 
+export const kudosMessageMin = 10;
+export const kudosMessageMax = 500;
+
 const objectIdPattern = /^[a-f\d]{24}$/i;
 
 export function isObjectId(value: string) {
@@ -13,8 +16,8 @@ export const createKudosSchema = z.object({
   message: z
     .string()
     .trim()
-    .min(10, 'Write at least 10 characters.')
-    .max(500, 'Use at most 500 characters.'),
+    .min(kudosMessageMin, `Write at least ${kudosMessageMin} characters.`)
+    .max(kudosMessageMax, `Use at most ${kudosMessageMax} characters.`),
   template: z.enum(kudosTemplates, { error: 'Choose a template.' }),
 });
 

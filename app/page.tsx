@@ -9,7 +9,7 @@ import { listKudos } from '@/lib/kudos/list';
 
 export default function HomePage() {
   return (
-    <PageHeading title="Kudos Wall">
+    <PageHeading title="Kudos Wall" wide>
       <Suspense fallback={<WallSkeleton />}>
         <WallFeed />
       </Suspense>

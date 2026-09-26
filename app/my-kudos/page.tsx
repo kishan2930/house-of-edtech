@@ -11,7 +11,7 @@ import type { KudosItem } from '@/lib/kudos/types';
 
 export default function MyKudosPage() {
   return (
-    <PageHeading title="My Kudos">
+    <PageHeading title="My Kudos" wide>
       <Suspense fallback={<WallSkeleton />}>
         <MyKudosLists />
       </Suspense>
@@ -70,9 +70,9 @@ function KudosSection({
           </EmptyHeader>
         </Empty>
       ) : (
-        <ul className="flex flex-col gap-4">
+        <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {kudos.map((item) => (
-            <li key={item.id}>
+            <li key={item.id} className="min-w-0">
               <KudosCard item={item} />
             </li>
           ))}

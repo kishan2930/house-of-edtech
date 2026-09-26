@@ -1,6 +1,7 @@
 import mongoose, { Schema, model, models } from 'mongoose';
 
-import type { KudosTemplate } from '@/lib/kudos/types';
+import { kudosTemplates, type KudosTemplate } from '@/lib/kudos/types';
+import { kudosMessageMax, kudosMessageMin } from '@/lib/validators/kudos';
 
 const kudosSchema = new Schema(
   {
@@ -18,13 +19,13 @@ const kudosSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      minlength: 10,
-      maxlength: 500,
+      minlength: kudosMessageMin,
+      maxlength: kudosMessageMax,
     },
     template: {
       type: String,
       required: true,
-      enum: ['celebration', 'achievement'],
+      enum: [...kudosTemplates],
     },
     createdAt: {
       type: Date,
@@ -48,6 +49,17 @@ export type KudosDocument = {
   template: KudosTemplate;
   createdAt: Date;
 };
+
+const cachedKudos = models.Kudos as mongoose.Model<KudosDocument> | undefined;
+const cachedTemplates = cachedKudos?.schema.path('template')?.options.enum;
+
+if (
+  cachedKudos &&
+  (!Array.isArray(cachedTemplates) ||
+    kudosTemplates.some((template) => !cachedTemplates.includes(template)))
+) {
+  mongoose.deleteModel('Kudos');
+}
 
 export const Kudos =
   (models.Kudos as mongoose.Model<KudosDocument> | undefined) ??

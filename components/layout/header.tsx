@@ -12,7 +12,7 @@ export async function Header() {
 
   return (
     <header className="border-b border-primary-light">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
         <Link
           href="/"
           className="rounded-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"

@@ -1,4 +1,13 @@
-export const kudosTemplates = ['celebration', 'achievement'] as const;
+export const kudosTemplates = [
+  'celebration',
+  'achievement',
+  'teamwork',
+  'gratitude',
+  'innovation',
+  'leadership',
+  'kindness',
+  'welcome',
+] as const;
 export const reactionTypes = [
   'heart',
   'clap',

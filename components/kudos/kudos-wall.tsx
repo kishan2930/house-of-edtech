@@ -22,9 +22,9 @@ export function KudosWall({ kudos }: { kudos: KudosItem[] }) {
   }
 
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       {kudos.map((item) => (
-        <li key={item.id}>
+        <li key={item.id} className="min-w-0">
           <KudosCard item={item} />
         </li>
       ))}

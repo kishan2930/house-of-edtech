@@ -1,8 +1,9 @@
-import { cn } from '@/lib/utils';
-import { templateOptions } from '@/lib/kudos/templates';
-import type { KudosItem, KudosTemplate } from '@/lib/kudos/types';
+import type { ReactNode } from 'react';
 
 import { ReactionBar } from '@/components/kudos/reaction-bar';
+import { templateOptions } from '@/lib/kudos/templates';
+import type { KudosItem, KudosTemplate } from '@/lib/kudos/types';
+import { cn } from '@/lib/utils';
 
 const dateFormat = new Intl.DateTimeFormat('en-US', {
   month: 'short',
@@ -10,45 +11,194 @@ const dateFormat = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 });
 
-export function kudosSurfaceClass(template: KudosTemplate | null) {
+const emptyGiver =
+  'border border-dashed border-primary-light bg-card text-muted-foreground';
+const emptyReceiver = emptyGiver;
+
+export function kudosSurfaceClass(
+  template: KudosTemplate | null,
+  fill = false,
+) {
+  const option = templateOptions.find((item) => item.key === template);
+
   return cn(
-    'flex flex-col gap-3 rounded-[12px] border-l-[3px] bg-card p-4 text-card-foreground shadow-card',
-    template === 'celebration' &&
-      'border-l-accent bg-gradient-to-br from-accent-light/50 to-card shadow-accent-glow dark:from-accent/25',
-    template === 'achievement' &&
-      'border-l-primary bg-gradient-to-br from-primary-bg to-card shadow-teal-glow',
-    template === null && 'border-l-primary-light',
+    'relative flex w-full flex-col gap-4 overflow-hidden rounded-[12px] border-l-[3px] bg-card p-4 text-card-foreground shadow-card',
+    fill ? 'h-full' : 'h-fit',
+    option?.surface ?? 'border-l-primary-light',
   );
 }
 
-export function KudosCard({ item }: { item: KudosItem }) {
-  const template = templateOptions.find(
-    (option) => option.key === item.template,
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  const first = parts[0]?.[0] ?? '';
+  const second =
+    parts.length > 1
+      ? (parts[parts.length - 1]?.[0] ?? '')
+      : (parts[0]?.[1] ?? '');
+
+  return (first + second).toUpperCase() || '?';
+}
+
+function PersonRow({
+  name,
+  circleClass,
+  placeholder,
+}: {
+  name: string | null;
+  circleClass: string;
+  placeholder: string;
+}) {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span
+        aria-hidden="true"
+        className={cn(
+          'flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-extrabold',
+          name ? circleClass : emptyGiver,
+        )}
+      >
+        {name ? initials(name) : ''}
+      </span>
+      <span
+        className={
+          name
+            ? 'text-base font-extrabold'
+            : 'text-base font-medium text-muted-foreground'
+        }
+      >
+        {name ?? placeholder}
+      </span>
+    </div>
   );
+}
+
+export function KudosCardFace({
+  senderName,
+  recipientName,
+  message,
+  template,
+  createdAt,
+  footer,
+  live = false,
+  fill = false,
+}: {
+  senderName: string;
+  recipientName: string | null;
+  message: string;
+  template: KudosTemplate | null;
+  createdAt?: string;
+  footer?: ReactNode;
+  live?: boolean;
+  fill?: boolean;
+}) {
+  const selected = templateOptions.find((option) => option.key === template);
+  const trimmedMessage = message.trim();
+  const giverClass = selected?.giver ?? 'bg-primary text-primary-foreground';
+  const receiverClass =
+    selected?.receiver ?? 'bg-card text-foreground ring-2 ring-primary-light';
 
   return (
-    <article className={kudosSurfaceClass(item.template)}>
-      {template ? (
-        <p className="inline-flex w-fit items-center gap-1 rounded-full bg-input px-2.5 py-1 text-sm font-extrabold">
-          <span aria-hidden="true">{template.emoji}</span>
-          {template.label}
-        </p>
+    <article
+      className={kudosSurfaceClass(template, fill)}
+      aria-live={live ? 'polite' : undefined}
+    >
+      {selected ? (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-44"
+        >
+          <div
+            className={cn(
+              'absolute inset-0 bg-gradient-to-l to-transparent',
+              selected.wash,
+            )}
+          />
+          <span
+            className="absolute top-2 right-2 text-8xl leading-none"
+            style={{
+              maskImage: 'linear-gradient(to left, #000 28%, transparent 88%)',
+              WebkitMaskImage:
+                'linear-gradient(to left, #000 28%, transparent 88%)',
+            }}
+          >
+            {selected.emoji}
+          </span>
+        </div>
       ) : null}
-      <p className="text-sm font-medium">
-        <span className="font-extrabold">{item.sender.name}</span>
-        <span aria-hidden="true"> → </span>
-        <span className="sr-only"> to </span>
-        <span className="font-extrabold">{item.recipient.name}</span>
-      </p>
-      <p className="text-lg font-extrabold leading-snug">“{item.message}”</p>
-      <time dateTime={item.createdAt} className="text-sm text-muted-foreground">
-        {dateFormat.format(new Date(item.createdAt))}
-      </time>
-      <ReactionBar
-        kudosId={item.id}
-        counts={item.reactions.counts}
-        mine={item.reactions.mine}
-      />
+      {selected ? <p className="sr-only">{selected.label}</p> : null}
+      <div className="relative flex flex-col gap-1.5 pr-16">
+        <PersonRow
+          name={senderName}
+          circleClass={giverClass}
+          placeholder="Your name"
+        />
+        <p className="pl-[3.125rem] text-sm text-muted-foreground">to</p>
+        <PersonRow
+          name={recipientName}
+          circleClass={nameClass(recipientName, receiverClass)}
+          placeholder="Select a teammate"
+        />
+      </div>
+      <blockquote className="relative flex gap-1.5">
+        <span
+          aria-hidden="true"
+          className="pt-0.5 font-serif text-5xl leading-none text-foreground/35"
+        >
+          “
+        </span>
+        <p
+          className={cn(
+            'min-w-0 flex-1 rounded-lg px-3 py-2.5 text-base leading-relaxed font-medium',
+            selected?.quote ?? 'bg-primary-bg',
+            trimmedMessage ? 'text-card-foreground' : 'text-muted-foreground',
+          )}
+        >
+          {trimmedMessage || 'Write a message'}
+        </p>
+        <span
+          aria-hidden="true"
+          className="self-end pb-0.5 font-serif text-5xl leading-none text-foreground/35"
+        >
+          ”
+        </span>
+      </blockquote>
+      {createdAt || footer ? (
+        <div className="relative mt-auto flex items-end justify-between gap-3">
+          <div className="min-w-0 flex-1">{footer}</div>
+          {createdAt ? (
+            <time
+              dateTime={createdAt}
+              className="shrink-0 pb-1 text-right font-serif text-sm tracking-wide text-muted-foreground italic"
+            >
+              {dateFormat.format(new Date(createdAt))}
+            </time>
+          ) : null}
+        </div>
+      ) : null}
     </article>
+  );
+}
+
+function nameClass(name: string | null, circleClass: string) {
+  return name ? circleClass : emptyReceiver;
+}
+
+export function KudosCard({ item }: { item: KudosItem }) {
+  return (
+    <KudosCardFace
+      senderName={item.sender.name}
+      recipientName={item.recipient.name}
+      message={item.message}
+      template={item.template}
+      createdAt={item.createdAt}
+      fill
+      footer={
+        <ReactionBar
+          kudosId={item.id}
+          counts={item.reactions.counts}
+          mine={item.reactions.mine}
+        />
+      }
+    />
   );
 }

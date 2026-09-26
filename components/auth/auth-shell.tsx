@@ -5,7 +5,7 @@ import { Wordmark } from '@/components/layout/wordmark';
 const notes = [
   {
     title: 'What kudos is',
-    body: 'Kudos comes from the Greek word for glory. It means praise said in public, not a quiet thank-you. On this wall, one kudos is a short note from you to one teammate, marked as a celebration or an achievement.',
+    body: 'Kudos comes from the Greek word for glory. It means praise said in public, not a quiet thank-you. On this wall, one kudos is a short note from you to one teammate, marked with a sticker for the kind of praise it is.',
   },
   {
     title: 'Why you give it',

@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import {
   Field,
+  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
@@ -30,9 +31,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { templateOptions } from '@/lib/kudos/templates';
+import { isKudosTemplate, templateOptions } from '@/lib/kudos/templates';
 import type { KudosTemplate } from '@/lib/kudos/types';
-import { createKudosSchema } from '@/lib/validators/kudos';
+import { cn } from '@/lib/utils';
+import { createKudosSchema, kudosMessageMax } from '@/lib/validators/kudos';
 
 type Teammate = {
   id: string;
@@ -199,14 +201,20 @@ export function CreateKudosDialog({ senderName }: { senderName: string }) {
             Recognize a teammate.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-6 md:grid-cols-2">
-          <KudosPreview
-            senderName={senderName}
-            recipientName={recipientName}
-            message={message}
-            template={template}
-          />
-          <form className="flex flex-col gap-5" noValidate onSubmit={onSubmit}>
+        <div className="grid items-center justify-items-center gap-6 md:grid-cols-2 md:justify-items-stretch">
+          <div className="w-full max-w-sm md:max-w-none">
+            <KudosPreview
+              senderName={senderName}
+              recipientName={recipientName}
+              message={message}
+              template={template}
+            />
+          </div>
+          <form
+            className="flex w-full flex-col gap-5"
+            noValidate
+            onSubmit={onSubmit}
+          >
             <FieldGroup>
               <Field data-invalid={Boolean(fieldErrors.recipientId)}>
                 <FieldLabel htmlFor="kudos-recipient">Give Kudos to</FieldLabel>
@@ -259,9 +267,10 @@ export function CreateKudosDialog({ senderName }: { senderName: string }) {
                   id="kudos-message"
                   name="message"
                   value={message}
-                  maxLength={500}
+                  maxLength={kudosMessageMax}
                   disabled={pending}
                   aria-invalid={Boolean(fieldErrors.message)}
+                  aria-describedby="kudos-message-count"
                   placeholder="Write a message"
                   onChange={(event) => {
                     setMessage(event.target.value);
@@ -271,6 +280,17 @@ export function CreateKudosDialog({ senderName }: { senderName: string }) {
                     }));
                   }}
                 />
+                <FieldDescription
+                  id="kudos-message-count"
+                  className={cn(
+                    'text-right',
+                    kudosMessageMax - message.length === 0 &&
+                      'font-extrabold text-destructive',
+                  )}
+                >
+                  {message.length} written, {kudosMessageMax - message.length}{' '}
+                  left
+                </FieldDescription>
                 <FieldError>{fieldErrors.message}</FieldError>
               </Field>
               <Field data-invalid={Boolean(fieldErrors.template)}>
@@ -282,8 +302,7 @@ export function CreateKudosDialog({ senderName }: { senderName: string }) {
                   disabled={pending}
                   onValueChange={(groupValue) => {
                     const next = groupValue.find(
-                      (value): value is KudosTemplate =>
-                        value === 'celebration' || value === 'achievement',
+                      (value): value is KudosTemplate => isKudosTemplate(value),
                     );
 
                     if (!next) {
@@ -302,11 +321,10 @@ export function CreateKudosDialog({ senderName }: { senderName: string }) {
                       key={option.key}
                       value={option.key}
                       variant="outline"
-                      className={
-                        option.key === 'celebration'
-                          ? 'h-11 min-h-11 rounded-full border-border bg-input text-base font-extrabold text-primary-dark data-pressed:border-accent-dark data-pressed:bg-accent data-pressed:text-accent-foreground data-pressed:shadow-accent-glow'
-                          : 'h-11 min-h-11 rounded-full border-border bg-input text-base font-extrabold text-primary-dark data-pressed:border-ink data-pressed:bg-ink data-pressed:text-input data-pressed:shadow-teal-glow'
-                      }
+                      className={cn(
+                        'h-10 min-h-10 justify-start rounded-full border-border bg-input px-3 text-sm font-extrabold text-primary-dark',
+                        option.pressed,
+                      )}
                     >
                       <span aria-hidden="true">{option.emoji}</span>
                       {option.label}

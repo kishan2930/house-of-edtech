@@ -36,7 +36,7 @@ const profiles = [
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-border">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <p className="text-sm font-extrabold tracking-[0.04em] text-foreground">
           Kishan Ambaliya
         </p>
