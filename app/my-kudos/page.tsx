@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 
 import { KudosCard } from '@/components/kudos/kudos-card';
-import { WallSkeleton } from '@/components/kudos/wall-skeleton';
+import { MyKudosSkeleton } from '@/components/kudos/wall-skeleton';
 import { PageHeading } from '@/components/layout/page-heading';
 import { Empty, EmptyHeader, EmptyTitle } from '@/components/ui/empty';
 import { requireUser } from '@/lib/auth/session';
@@ -12,7 +12,7 @@ import type { KudosItem } from '@/lib/kudos/types';
 export default function MyKudosPage() {
   return (
     <PageHeading title="My Kudos" wide>
-      <Suspense fallback={<WallSkeleton />}>
+      <Suspense fallback={<MyKudosSkeleton />}>
         <MyKudosLists />
       </Suspense>
     </PageHeading>

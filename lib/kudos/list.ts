@@ -1,3 +1,5 @@
+import { cache } from 'react';
+
 import { connectDB } from '@/lib/db';
 import { serializeKudosList } from '@/lib/kudos/serialize';
 import type { KudosItem, KudosTemplate, KudosView } from '@/lib/kudos/types';
@@ -14,7 +16,7 @@ type KudosListOptions = {
   personId?: string;
 };
 
-export async function listPeople(): Promise<KudosPerson[]> {
+export const listPeople = cache(async (): Promise<KudosPerson[]> => {
   await connectDB();
 
   const users = await User.find().select('name');
@@ -27,7 +29,7 @@ export async function listPeople(): Promise<KudosPerson[]> {
     .toSorted((a, b) =>
       a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }),
     );
-}
+});
 
 export async function listKudos(
   userId: string,
