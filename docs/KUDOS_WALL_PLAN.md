@@ -1,6 +1,6 @@
 # Kudos Wall — Implementation Plan
 
-Status: **not started**. This file is the tracker. Check a box only when that step is done and verified. Do not start the next phase until the current phase’s “Done when” checks pass.
+Status: **complete**. This file is the tracker. Check a box only when that step is done and verified. Do not start the next phase until the current phase’s “Done when” checks pass.
 
 Do not implement roles, departments, managers, comments, notifications, admin, invitations, or AI. Those are future scope.
 
@@ -13,7 +13,7 @@ Do not implement roles, departments, managers, comments, notifications, admin, i
 - [x] Phase 3 — Create Kudos
 - [x] Phase 4 — Reactions
 - [x] Phase 5 — Profile pages
-- [ ] Phase 6 — Polish and critical tests
+- [x] Phase 6 — Polish and critical tests
 
 ---
 
